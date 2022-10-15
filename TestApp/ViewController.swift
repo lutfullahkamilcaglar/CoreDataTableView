@@ -8,7 +8,7 @@
 import UIKit
 import CoreData
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITableViewDelegate, UINavigationControllerDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     
@@ -18,15 +18,8 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         title = "The List"
-        //tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
         tableView.dataSource = self
-        tableView.delegate = self
-     
-        tableView.rowHeight = UITableView.automaticDimension
-//        tableView.rowHeight = UITableView.automaticDimension
-//        tableView.estimatedRowHeight = 300
-
-
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -53,35 +46,6 @@ class ViewController: UIViewController {
         print("Could not fetch. \(error), \(error.userInfo)")
       }
     }
-
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            guard let appDelegate =
-                    UIApplication.shared.delegate as? AppDelegate else {
-                return
-            }
-            
-            // 1
-            let managedContext =
-            appDelegate.persistentContainer.viewContext
-            
-            // Remove the people from the CoreData
-            appDelegate.persistentContainer.viewContext.delete(self.people[indexPath.row])
-            //self.people.remove(at: indexPath.row)
-            // Save Changes
-            do {
-                try managedContext.save()
-                //self.people.remove(at: indexPath.row)
-            } catch let error as NSError {
-                print("Could not save. \(error), \(error.userInfo)")
-            }
-            // Remove row from TableView
-            //self.tableView.deleteRows(at: [indexPath], with: .fade)
-            self.people.remove(at: indexPath.row)
-            self.tableView.reloadData()
-        }
-    }
-
 
     @IBAction func addName(_ sender: UIBarButtonItem) {
         let alert = UIAlertController(title: "New Name",
@@ -137,26 +101,84 @@ class ViewController: UIViewController {
             print("Could not save. \(error), \(error.userInfo)")
         }
     }
-}
+    
+//    private func presentShareSheet() {
+////        let myTextAtCurrentRow = people[IndexPat]
+//
+//        guard let image = UIImage(systemName: "bell"), let url = URL(string: "https://www.google.com/") else {
+//            return
+//        } // bell resmi paylasiyor row ile degistir
+//        let shareSheetVC = UIActivityViewController(activityItems:[image, url], applicationActivities: nil)
+//        present(shareSheetVC, animated: true)
+//    }
 
+    
+}
 // MARK: - UITableViewDataSource
-extension ViewController: UITableViewDataSource, UITableViewDelegate {
+extension ViewController: UITableViewDataSource {
     
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return people.count
   }
-
+    
   func tableView(_ tableView: UITableView,cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let person = people[indexPath.row]
-      let selfSizingCell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! SelfSizingTableViewCell
-      selfSizingCell.cellLabelText.text = person.value(forKey: "name") as? String
-      selfSizingCell.cellLabelText?.numberOfLines = 0
-//    let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-//      cell.textLabel?.text = person.value(forKeyPath: "name") as? String
-//    return cell
+      let person = people[indexPath.row]
+      let selfSizingCell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! SelfSizingTableViewCell
+      selfSizingCell.cellLabelText.text = person.value(forKeyPath: "name") as? String
       return selfSizingCell
   }
 
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let editAction = UIContextualAction(style: .normal, title: "Edit") {_, _, _ in
+            print("Edit Button")
+            // edit ekle get the codes in add 
+        }
+        editAction.backgroundColor = .systemTeal
+        let share = UIContextualAction(style: .normal , title: "Share") {_, _, _ in
+            
+            let person = self.people[indexPath.row]
+            let textToShare = person.value(forKey: "name") as? String
+            guard let image = UIImage(systemName: "bell"), let url = URL(string: "https://www.google.com/") else {
+                return
+            } // bell resmi paylasiyor row ile degistir
+            let shareSheetVC = UIActivityViewController(activityItems:[textToShare,image], applicationActivities: nil)
+            self.present(shareSheetVC, animated: true)
+        
+            
+            
+        }
+        share.backgroundColor = .systemIndigo
+        let delete = UIContextualAction(style: .destructive, title: "Delete") {_, _, _ in
+            guard let appDelegate =
+                    UIApplication.shared.delegate as? AppDelegate else {
+                return
+            }
+            
+            // 1
+            let managedContext =
+            appDelegate.persistentContainer.viewContext
+            
+            // Remove the people from the CoreData
+            appDelegate.persistentContainer.viewContext.delete(self.people[indexPath.row])
+            // Save Changes
+            do {
+                try managedContext.save()
+                //self.people.remove(at: indexPath.row)
+            } catch let error as NSError {
+                print("Could not save. \(error), \(error.userInfo)")
+            }
+            // Remove row from TableView
+            self.people.remove(at: indexPath.row)
+            self.tableView.reloadData()
+        }
+        // SWIPE TO LEFT CONFIGURATION
+        let swipeConfiguration = UISwipeActionsConfiguration(actions: [share, delete, editAction])
+        return swipeConfiguration
+    }
+
+    
+    
+    
 }
 
 
