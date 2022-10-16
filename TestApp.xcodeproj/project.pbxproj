@@ -15,6 +15,7 @@
 		F5F56FF928F42C5200F1D3F3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F5F56FF828F42C5200F1D3F3 /* Assets.xcassets */; };
 		F5F56FFC28F42C5200F1D3F3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F5F56FFA28F42C5200F1D3F3 /* LaunchScreen.storyboard */; };
 		F5F5700428F5AFC300F1D3F3 /* SelfSizingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5F5700328F5AFC300F1D3F3 /* SelfSizingTableViewCell.swift */; };
+		F5F5702C28FB630500F1D3F3 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5F5702B28FB630500F1D3F3 /* TableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		F5F56FFB28F42C5200F1D3F3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F5F56FFD28F42C5200F1D3F3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F5F5700328F5AFC300F1D3F3 /* SelfSizingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelfSizingTableViewCell.swift; sourceTree = "<group>"; };
+		F5F5702B28FB630500F1D3F3 /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +66,7 @@
 				F5F56FEE28F42C5100F1D3F3 /* SceneDelegate.swift */,
 				F5F56FF028F42C5100F1D3F3 /* ViewController.swift */,
 				F5F5700328F5AFC300F1D3F3 /* SelfSizingTableViewCell.swift */,
+				F5F5702B28FB630500F1D3F3 /* TableViewController.swift */,
 				F5F56FF228F42C5100F1D3F3 /* Main.storyboard */,
 				F5F56FF828F42C5200F1D3F3 /* Assets.xcassets */,
 				F5F56FFA28F42C5200F1D3F3 /* LaunchScreen.storyboard */,
@@ -145,6 +148,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F5F56FF128F42C5100F1D3F3 /* ViewController.swift in Sources */,
+				F5F5702C28FB630500F1D3F3 /* TableViewController.swift in Sources */,
 				F5F56FF728F42C5100F1D3F3 /* TestApp.xcdatamodeld in Sources */,
 				F5F5700428F5AFC300F1D3F3 /* SelfSizingTableViewCell.swift in Sources */,
 				F5F56FED28F42C5100F1D3F3 /* AppDelegate.swift in Sources */,
